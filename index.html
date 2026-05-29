@@ -1,0 +1,2519 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOBIS Producer Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOBIS INTELLIGENCE PLATFORM — Klickdummy
+   Tokens nach Tobis Design System; Light-Default, Dark-Toggle.
+   ============================================================ */
+
+:root {
+  /* LIGHT (Standard) — warm Papier-Off-White */
+  --bg-0:        #EEEAE0;
+  --bg-1:        #F7F5EF;
+  --bg-2:        #FFFFFF;
+  --bg-3:        #F0EBE0;
+  --bg-overlay:  rgba(28,26,22,0.55);
+
+  --fg-1:        #1B1916;
+  --fg-2:        #4A4540;
+  --fg-3:        #807A6F;
+  --fg-4:        #B7B0A2;
+
+  --accent-1:    #C99A0F;   /* signal yellow, abgedunkelt für Lesbarkeit */
+  --accent-1-fill: #FAD13B; /* echter Tobis-Gelb für Buttons mit dunklem Text */
+  --accent-2:    #9A7506;
+  --accent-soft: rgba(201,154,15,0.12);
+
+  --brand-red:      #C13A3A;
+  --brand-red-deep: #9A2C2C;
+  --brand-red-soft: rgba(193,58,58,0.10);
+
+  --border-1:    #E4DDD0;
+  --border-2:    #D0C8B8;
+  --border-focus:#C99A0F;
+
+  --status-live:    #4F8C5E;
+  --status-pitch:   #C99A0F;
+  --status-concept: #9A938A;
+
+  --shadow-1: 0 1px 2px rgba(28,26,22,0.04);
+  --shadow-2: 0 12px 32px -8px rgba(28,26,22,0.10);
+  --shadow-3: 0 24px 56px -12px rgba(28,26,22,0.18);
+
+  --font-display: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-ui:      "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  --container-max: 1180px;
+  --container-pad: clamp(20px, 4vw, 48px);
+  --nav-height:    68px;
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cinema: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* DARK — echtes Tobis */
+body.dark {
+  --bg-0:        #0E0E0E;
+  --bg-1:        #1A1A1A;
+  --bg-2:        #232323;
+  --bg-3:        #2E2E2E;
+  --bg-overlay:  rgba(0,0,0,0.85);
+
+  --fg-1:        #FFFFFF;
+  --fg-2:        #C9C9C9;
+  --fg-3:        #8A8A8A;
+  --fg-4:        #5A5A5A;
+
+  --accent-1:    #FAD13B;
+  --accent-1-fill: #FAD13B;
+  --accent-2:    #D4A800;
+  --accent-soft: rgba(250,209,59,0.16);
+
+  --brand-red:      #EB4545;
+  --brand-red-deep: #D23636;
+  --brand-red-soft: rgba(235,69,69,0.14);
+
+  --border-1:    #3A3A3A;
+  --border-2:    #4D4D4D;
+  --border-focus:#FAD13B;
+
+  --status-live:    #4FAE5F;
+  --status-pitch:   #FAD13B;
+  --status-concept: #8A8A8A;
+
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.5);
+  --shadow-2: 0 12px 32px -8px rgba(0,0,0,0.55);
+  --shadow-3: 0 24px 56px -12px rgba(0,0,0,0.75);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+body {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg-1);
+  color: var(--fg-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 240ms var(--ease-out), color 240ms var(--ease-out);
+}
+
+::selection { background: var(--accent-1-fill); color: #1B1916; }
+
+/* ---------- Header / Navigation ---------- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border-1);
+}
+.header__inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  height: var(--nav-height);
+  padding: 0 var(--container-pad);
+  display: flex; align-items: center; gap: 28px;
+}
+
+.brand {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--fg-1);
+}
+.brand__mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  background: var(--accent-1-fill);
+  color: #1B1916;
+  font-weight: 900; font-size: 17px;
+  letter-spacing: 0;
+}
+.brand__sub {
+  font-weight: 400; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  margin-left: 4px;
+}
+
+.nav {
+  display: flex; gap: 26px; margin-left: 16px;
+}
+.nav button {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+  padding: 6px 0;
+  position: relative;
+  transition: color 160ms var(--ease-out);
+}
+.nav button:hover { color: var(--fg-1); }
+.nav button.is-active { color: var(--fg-1); }
+.nav button.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -22px;
+  height: 2px;
+  background: var(--accent-1-fill);
+}
+
+.header__actions {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  padding: 8px 12px;
+  border: 1px solid var(--border-1);
+  transition: all 200ms var(--ease-out);
+}
+.theme-toggle:hover { border-color: var(--accent-1); color: var(--fg-1); }
+.theme-toggle__dot {
+  width: 8px; height: 8px; border-radius: 999px;
+  background: var(--accent-1-fill);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.cta-primary {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 12px 22px;
+  background: var(--accent-1-fill);
+  color: #1B1916;
+  transition: all 200ms var(--ease-out);
+  border: 1px solid var(--accent-1-fill);
+}
+.cta-primary:hover { background: var(--accent-2); border-color: var(--accent-2); color: #fff; }
+body.dark .cta-primary:hover { color: #1B1916; }
+
+/* ---------- Main / Screens ---------- */
+main { min-height: calc(100vh - var(--nav-height)); }
+.screen { display: none; }
+.screen.is-active { display: block; animation: fadeIn 320ms var(--ease-out); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 56px var(--container-pad) 96px;
+}
+.container--narrow { max-width: 760px; }
+
+/* ---------- Typography ---------- */
+.eyebrow {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--accent-1);
+  margin: 0 0 16px;
+}
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(36px, 5.2vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin: 0 0 24px;
+  color: var(--fg-1);
+}
+.h-section {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+  color: var(--fg-1);
+}
+.h-card {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--fg-1);
+}
+.label-cap {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--fg-3);
+}
+.lead {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--fg-2);
+  max-width: 60ch;
+}
+
+/* ---------- Status pills ---------- */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.pill::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 999px;
+  background: currentColor;
+}
+.pill--live    { color: var(--status-live); }
+.pill--pitch   { color: var(--status-pitch); background: var(--accent-soft); border-color: transparent; }
+.pill--concept { color: var(--status-concept); }
+.pill--info    { color: var(--fg-2); background: var(--bg-3); border-color: transparent; }
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+.hero {
+  border-bottom: 1px solid var(--border-1);
+  padding-bottom: 48px;
+  margin-bottom: 56px;
+}
+.hero__meta {
+  display: flex; gap: 16px; align-items: center;
+  font-size: 12px;
+  color: var(--fg-3);
+  margin-bottom: 32px;
+}
+.hero__meta b { color: var(--fg-1); font-weight: 700; }
+.hero__divider { width: 1px; height: 14px; background: var(--border-2); }
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-1);
+  border: 1px solid var(--border-1);
+  margin-bottom: 56px;
+}
+@media (max-width: 880px) { .module-grid { grid-template-columns: 1fr; } }
+
+.module {
+  background: var(--bg-2);
+  padding: 28px 24px 24px;
+  position: relative;
+  display: flex; flex-direction: column;
+  text-align: left;
+  min-height: 200px;
+  transition: background 200ms var(--ease-out);
+}
+.module:hover { background: var(--bg-3); }
+.module.is-disabled { cursor: default; }
+.module.is-disabled:hover { background: var(--bg-2); }
+
+.module__number {
+  position: absolute; top: 16px; right: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  color: var(--fg-4);
+  letter-spacing: 0.06em;
+}
+.module__status { margin-bottom: 20px; }
+.module__name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 6px;
+  color: var(--fg-1);
+}
+.module__role {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent-1);
+  margin: 0 0 16px;
+}
+.module__desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--fg-2);
+  margin: 0 0 auto;
+}
+.module__cta {
+  margin-top: 22px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  transition: color 160ms var(--ease-out), gap 160ms var(--ease-out);
+}
+.module:not(.is-disabled):hover .module__cta { color: var(--fg-1); gap: 14px; }
+.module__cta-arrow { transition: transform 200ms var(--ease-out); }
+.module:not(.is-disabled):hover .module__cta-arrow { transform: translateX(4px); }
+
+/* Asset-Bibliothek band */
+.library-band {
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  padding: 32px 32px 28px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 880px) { .library-band { grid-template-columns: 1fr; } }
+
+.library-band__intro .label-cap { margin-bottom: 12px; display: block; }
+.library-band__intro h3 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+.library-band__intro p { font-size: 13.5px; color: var(--fg-2); margin: 0 0 16px; max-width: 38ch; }
+.library-band__intro button {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-1);
+  border-bottom: 1px solid var(--accent-1);
+  padding-bottom: 2px;
+}
+.library-band__intro button:hover { color: var(--accent-1); }
+
+.library-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+@media (max-width: 640px) { .library-kpis { grid-template-columns: repeat(2, 1fr); } }
+.kpi__num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-1);
+}
+.kpi__label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  margin-top: 8px;
+}
+
+/* External sources */
+.sources {
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-1);
+}
+.sources__label { color: var(--fg-3); margin-right: 8px; }
+.source-chip {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 7px 11px;
+  border: 1px solid var(--border-1);
+  color: var(--fg-2);
+  background: var(--bg-2);
+}
+
+/* ============================================================
+   COVERAGE LIST
+   ============================================================ */
+.list-toolbar {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.list-toolbar__filters { display: flex; gap: 6px; }
+.filter-pill {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 8px 14px;
+  border: 1px solid var(--border-1);
+  color: var(--fg-2);
+  background: var(--bg-2);
+  transition: all 180ms var(--ease-out);
+}
+.filter-pill.is-active { background: var(--fg-1); color: var(--bg-2); border-color: var(--fg-1); }
+.filter-pill:hover:not(.is-active) { border-color: var(--fg-2); color: var(--fg-1); }
+
+.list-meta { color: var(--fg-3); font-size: 13px; margin-left: auto; }
+
+.coverage-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+}
+.coverage-table th,
+.coverage-table td {
+  text-align: left;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-1);
+  font-size: 13.5px;
+  vertical-align: middle;
+}
+.coverage-table th {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  background: var(--bg-3);
+  padding-top: 12px; padding-bottom: 12px;
+}
+.coverage-table tbody tr:last-child td { border-bottom: 0; }
+.coverage-table tbody tr { transition: background 140ms var(--ease-out); }
+.coverage-table tbody tr:hover { background: var(--bg-3); cursor: pointer; }
+.coverage-table .col-title { font-weight: 700; }
+.coverage-table .col-meta { color: var(--fg-3); font-family: var(--font-mono); font-size: 12px; }
+.coverage-table .col-actions { color: var(--accent-1); font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; text-align: right; }
+
+/* ============================================================
+   ACQUISITIONS INPUT
+   ============================================================ */
+.form {
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  padding: 40px 40px 36px;
+}
+@media (max-width: 640px) { .form { padding: 24px; } }
+.form__intro {
+  border-bottom: 1px solid var(--border-1);
+  padding-bottom: 24px;
+  margin-bottom: 28px;
+  display: flex; justify-content: space-between; align-items: start; gap: 24px;
+}
+.form__intro h3 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 22px; text-transform: uppercase;
+  margin: 0 0 6px;
+}
+.form__intro p { font-size: 13.5px; color: var(--fg-2); margin: 0; max-width: 42ch; }
+
+.field { margin-bottom: 22px; }
+.field__label {
+  display: block;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--fg-3);
+  margin-bottom: 8px;
+}
+.field__input,
+.field__select,
+.field__textarea {
+  display: block; width: 100%;
+  background: var(--bg-1);
+  border: 1px solid var(--border-1);
+  padding: 12px 14px;
+  font-size: 14.5px;
+  color: var(--fg-1);
+  font-family: var(--font-ui);
+  transition: border-color 160ms var(--ease-out), background 160ms var(--ease-out);
+}
+.field__input:focus,
+.field__select:focus,
+.field__textarea:focus {
+  outline: none;
+  border-color: var(--accent-1);
+  background: var(--bg-2);
+}
+.field__textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.field__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .field__row { grid-template-columns: 1fr; } }
+
+.radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.radio-group label {
+  flex: 1; min-width: 120px;
+  border: 1px solid var(--border-1);
+  background: var(--bg-1);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 160ms var(--ease-out);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.radio-group label:hover { border-color: var(--fg-3); }
+.radio-group input { display: none; }
+.radio-group input:checked + .radio__title { color: var(--fg-1); font-weight: 700; }
+.radio-group input:checked ~ .radio__sub { color: var(--fg-2); }
+.radio-group label:has(input:checked) {
+  background: var(--accent-soft);
+  border-color: var(--accent-1);
+}
+.radio__title { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--fg-2); }
+.radio__sub { font-size: 11px; color: var(--fg-3); }
+
+.form__actions {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-1);
+  margin-top: 8px;
+}
+.form__actions .demo-hint { font-size: 11px; color: var(--fg-3); }
+.btn-big {
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 16px 36px;
+  background: var(--accent-1-fill);
+  color: #1B1916;
+  display: inline-flex; align-items: center; gap: 12px;
+  transition: all 200ms var(--ease-out);
+}
+.btn-big:hover { background: var(--accent-2); color: #fff; }
+body.dark .btn-big:hover { color: #1B1916; }
+
+/* ============================================================
+   ANALYSE LÄUFT
+   ============================================================ */
+.loading-screen {
+  min-height: calc(100vh - var(--nav-height));
+  display: grid; place-items: center;
+  padding: 60px var(--container-pad);
+}
+.loading-card {
+  width: 100%;
+  max-width: 620px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  padding: 56px 48px 48px;
+  text-align: center;
+}
+@media (max-width: 640px) { .loading-card { padding: 36px 24px; } }
+.loading-card .eyebrow { color: var(--fg-3); }
+.loading-card h2 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 26px; text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.loading-card p.lead { font-size: 14px; margin: 0 auto 32px; }
+
+.steps {
+  text-align: left;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+.step {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 18px;
+  background: var(--bg-1);
+  border: 1px solid var(--border-1);
+  opacity: 0.3;
+  transition: all 320ms var(--ease-out);
+}
+.step.is-active {
+  opacity: 1;
+  border-color: var(--accent-1);
+  background: var(--accent-soft);
+}
+.step.is-done {
+  opacity: 1;
+  border-color: var(--border-2);
+  background: var(--bg-1);
+}
+.step__num {
+  width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 700;
+  color: var(--fg-3);
+  border: 1px solid var(--border-2);
+}
+.step.is-active .step__num,
+.step.is-done .step__num {
+  background: var(--accent-1-fill);
+  border-color: var(--accent-1-fill);
+  color: #1B1916;
+}
+.step__text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+  flex: 1;
+}
+.step.is-active .step__text { color: var(--fg-1); }
+.step__indicator {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+  letter-spacing: 0.06em;
+}
+.step.is-active .step__indicator { color: var(--accent-1); animation: pulse 1.2s ease-in-out infinite; }
+.step.is-done .step__indicator { color: var(--status-live); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* ============================================================
+   RESULT
+   ============================================================ */
+.result-head {
+  border-bottom: 1px solid var(--border-1);
+  padding-bottom: 28px;
+  margin-bottom: 0;
+  display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end;
+}
+.result-head h1 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(32px, 4vw, 44px);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin: 0 0 8px;
+}
+.result-head .meta-row {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: 12px; color: var(--fg-3);
+}
+.result-head .meta-row b { color: var(--fg-2); font-weight: 700; }
+
+.tabs {
+  display: flex; gap: 0;
+  border-bottom: 1px solid var(--border-1);
+  margin-bottom: 36px;
+  overflow-x: auto;
+}
+.tab {
+  padding: 18px 24px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--fg-3);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 160ms var(--ease-out);
+  white-space: nowrap;
+  display: inline-flex; gap: 10px; align-items: center;
+}
+.tab:hover { color: var(--fg-1); }
+.tab.is-active { color: var(--fg-1); border-color: var(--accent-1-fill); }
+.tab__num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-4);
+}
+
+.tab-panel { display: none; }
+.tab-panel.is-active { display: block; animation: fadeIn 240ms var(--ease-out); }
+
+/* TAB 1: VERGLEICHSFILME */
+.films-list { display: flex; flex-direction: column; }
+.film {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border-1);
+  align-items: start;
+}
+.film:last-child { border-bottom: 0; }
+.film__poster {
+  aspect-ratio: 2/3;
+  background: linear-gradient(135deg, var(--bg-3), var(--bg-0));
+  border: 1px solid var(--border-1);
+  display: flex; align-items: end;
+  padding: 8px;
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  line-height: 1.15;
+}
+.film__main { min-width: 0; }
+.film__head {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.film__title {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 18px; text-transform: uppercase;
+  letter-spacing: 0.005em;
+  color: var(--fg-1);
+}
+.film__year { font-size: 13px; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.film__sim {
+  margin-left: auto;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent-1);
+}
+.film__reason {
+  font-size: 13.5px; color: var(--fg-2);
+  margin: 4px 0 14px;
+  line-height: 1.5;
+  max-width: 60ch;
+}
+.film__metrics {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  font-size: 12px;
+}
+.film__metrics dt {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+}
+.film__metrics dd {
+  margin: 2px 0 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-1);
+}
+.film__source {
+  align-self: start;
+  display: flex; flex-direction: column; gap: 6px;
+  align-items: flex-end;
+  min-width: 140px;
+}
+.film__source-name {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--fg-3);
+}
+.confidence {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+}
+.confidence__bar {
+  display: inline-flex; gap: 2px;
+}
+.confidence__bar span {
+  width: 5px; height: 10px;
+  background: var(--border-2);
+}
+.confidence--high { color: var(--status-live); }
+.confidence--high .confidence__bar span { background: var(--status-live); }
+.confidence--mid { color: var(--accent-1); }
+.confidence--mid .confidence__bar span:nth-child(-n+2) { background: var(--accent-1); }
+.confidence--low { color: var(--fg-3); }
+.confidence--low .confidence__bar span:nth-child(1) { background: var(--fg-3); }
+
+@media (max-width: 720px) {
+  .film { grid-template-columns: 64px 1fr; }
+  .film__source { grid-column: span 2; flex-direction: row; align-items: center; }
+}
+
+/* TAB 2: PERFORMANCE */
+.scenarios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-1);
+  border: 1px solid var(--border-1);
+}
+@media (max-width: 720px) { .scenarios { grid-template-columns: 1fr; } }
+.scenario {
+  background: var(--bg-2);
+  padding: 28px 24px;
+}
+.scenario--center {
+  background: var(--bg-3);
+  position: relative;
+}
+.scenario--center::before {
+  content: "ERWARTUNG";
+  position: absolute; top: 0; left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--accent-1-fill);
+  color: #1B1916;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 5px 12px;
+}
+.scenario__label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--fg-3);
+  margin: 0 0 14px;
+}
+.scenario__besucher {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 38px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0 0 6px;
+}
+.scenario__besucher-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  margin: 0 0 24px;
+}
+.scenario__rows { display: flex; flex-direction: column; gap: 10px; }
+.scenario__rows .row {
+  display: flex; justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-1);
+}
+.scenario__rows .row:last-child { border-bottom: 0; padding-top: 10px; margin-top: 4px; border-top: 2px solid var(--fg-1); font-weight: 700; }
+.scenario__rows .label { color: var(--fg-3); }
+.scenario__rows .val { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--fg-1); }
+
+/* TAB 3: KAUFPREIS (the hero moment) */
+.price-hero {
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  padding: 56px 48px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 880px) {
+  .price-hero { grid-template-columns: 1fr; padding: 32px 24px; gap: 32px; }
+}
+
+.price-hero__label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--fg-3);
+  margin: 0 0 10px;
+}
+.price-hero__value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(54px, 8vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-1);
+  margin: 0;
+  display: inline-flex; align-items: baseline; gap: 12px;
+}
+.price-hero__value .currency {
+  font-size: 0.4em;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--fg-3);
+  transform: translateY(-0.4em);
+}
+.price-hero__corridor {
+  margin-top: 18px;
+  display: inline-flex; gap: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-1);
+  font-size: 13px;
+  color: var(--fg-2);
+}
+.price-hero__corridor b { color: var(--fg-1); font-weight: 700; font-variant-numeric: tabular-nums; }
+.price-hero__hint {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--fg-3);
+  max-width: 32ch;
+}
+
+/* Sliders */
+.sliders { display: flex; flex-direction: column; gap: 24px; }
+.slider {
+  background: var(--bg-1);
+  border: 1px solid var(--border-1);
+  padding: 16px 18px;
+}
+.slider__head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 12px;
+}
+.slider__label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--fg-3);
+}
+.slider__value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+}
+
+input[type="range"].slider__input {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 24px;
+  background: transparent;
+  margin: 0;
+  cursor: pointer;
+}
+input[type="range"].slider__input::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--border-2);
+}
+input[type="range"].slider__input::-moz-range-track {
+  height: 2px;
+  background: var(--border-2);
+}
+input[type="range"].slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px;
+  background: var(--accent-1-fill);
+  border: 2px solid var(--bg-2);
+  margin-top: -8px;
+  box-shadow: 0 0 0 1px var(--accent-1);
+  transition: transform 120ms var(--ease-out);
+}
+input[type="range"].slider__input:active::-webkit-slider-thumb { transform: scale(1.15); }
+input[type="range"].slider__input::-moz-range-thumb {
+  width: 18px; height: 18px;
+  background: var(--accent-1-fill);
+  border: 2px solid var(--bg-2);
+  box-shadow: 0 0 0 1px var(--accent-1);
+}
+
+.slider__range {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-4);
+  margin-top: 4px;
+}
+
+/* Rechenweg */
+.calc-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+}
+.calc-card__head {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border-1);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.calc-card__head h3 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 14px; text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0;
+}
+.calc-card__head .label-cap { color: var(--fg-3); }
+
+.calc-rows {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  padding: 8px 28px 16px;
+}
+.calc-row {
+  display: contents;
+}
+.calc-row > div {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-1);
+  font-size: 13.5px;
+}
+.calc-row > div:nth-child(1) { color: var(--fg-2); }
+.calc-row > div:nth-child(2) {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+  padding-right: 16px;
+  text-align: right;
+}
+.calc-row > div:nth-child(3) {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-1);
+  text-align: right;
+  min-width: 120px;
+}
+.calc-row.calc-row--minus > div:nth-child(3) { color: var(--brand-red); }
+.calc-row.calc-row--minus > div:nth-child(3)::before { content: "− "; }
+.calc-row.calc-row--total > div {
+  border-bottom: 0;
+  border-top: 2px solid var(--fg-1);
+  padding-top: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg-1);
+}
+.calc-row.calc-row--total > div:nth-child(3) {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--accent-1);
+}
+
+/* TAB 4: EXPORT */
+.export-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 24px;
+}
+@media (max-width: 880px) { .export-grid { grid-template-columns: 1fr; } }
+
+.export-options { display: flex; flex-direction: column; gap: 10px; }
+.export-opt {
+  display: flex; gap: 16px; align-items: start;
+  padding: 18px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  text-align: left;
+  cursor: pointer;
+  transition: all 180ms var(--ease-out);
+}
+.export-opt.is-selected { border-color: var(--accent-1); background: var(--accent-soft); }
+.export-opt:hover:not(.is-selected) { border-color: var(--fg-3); }
+.export-opt__check {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border-2);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.export-opt.is-selected .export-opt__check {
+  background: var(--accent-1-fill);
+  border-color: var(--accent-1-fill);
+}
+.export-opt.is-selected .export-opt__check::after {
+  content: "✓";
+  color: #1B1916;
+  font-size: 12px; font-weight: 900;
+}
+.export-opt__body h4 {
+  margin: 0 0 4px;
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 13px; text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.export-opt__body p { margin: 0; font-size: 13px; color: var(--fg-2); }
+
+.export-preview {
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  padding: 28px;
+}
+.export-preview h3 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 14px; text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-1);
+}
+.export-preview__rows { display: flex; flex-direction: column; gap: 8px; }
+.export-preview__row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; }
+.export-preview__row .l { color: var(--fg-3); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.export-preview__row .v { color: var(--fg-1); font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.export-preview__cta {
+  margin-top: 24px; padding-top: 18px;
+  border-top: 1px solid var(--border-1);
+  display: flex; justify-content: space-between; gap: 16px; align-items: center;
+}
+.export-success {
+  display: none;
+  margin-top: 24px;
+  padding: 14px 16px;
+  background: rgba(79,140,94,0.12);
+  border: 1px solid var(--status-live);
+  font-size: 13px;
+  color: var(--status-live);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.export-success.is-visible { display: block; animation: fadeIn 240ms var(--ease-out); }
+
+/* ============================================================
+   KONZEPT PLATZHALTER
+   ============================================================ */
+.concept {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+@media (max-width: 880px) { .concept { grid-template-columns: 1fr; } }
+
+.concept__intro h1 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(36px, 5vw, 56px);
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  margin: 0 0 16px;
+}
+.concept__intro p { font-size: 16px; line-height: 1.55; color: var(--fg-2); margin: 0 0 18px; max-width: 56ch; }
+
+.concept__details {
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  padding: 28px;
+}
+.concept__details h3 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 13px; text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-1);
+}
+.concept-list { display: flex; flex-direction: column; gap: 12px; }
+.concept-list li {
+  list-style: none;
+  display: grid; grid-template-columns: 18px 1fr; gap: 12px;
+  font-size: 13.5px; color: var(--fg-2);
+  line-height: 1.5;
+}
+.concept-list li::before {
+  content: "→";
+  color: var(--accent-1);
+  font-weight: 700;
+}
+.concept-phase {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.concept-phase__box .label-cap { display: block; margin-bottom: 8px; }
+.concept-phase__box p { font-size: 13px; color: var(--fg-2); margin: 0; }
+
+/* ============================================================
+   ASSET-BIBLIOTHEK
+   ============================================================ */
+.library-hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 56px;
+  align-items: start;
+  border-bottom: 1px solid var(--border-1);
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+}
+@media (max-width: 880px) { .library-hero { grid-template-columns: 1fr; } }
+
+.library-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border-1);
+  border: 1px solid var(--border-1);
+}
+.library-stats .kpi {
+  background: var(--bg-2);
+  padding: 24px;
+}
+
+.library-diagram {
+  background: var(--bg-2);
+  border: 1px solid var(--border-1);
+  padding: 32px;
+  margin-bottom: 40px;
+}
+.library-diagram h3 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 14px; text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 0 0 24px;
+}
+.diagram-flow {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+@media (max-width: 720px) { .diagram-flow { grid-template-columns: 1fr; } }
+.diagram-col {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.diagram-col h4 {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  margin: 0 0 6px;
+}
+.diagram-pill {
+  background: var(--bg-1);
+  border: 1px solid var(--border-1);
+  padding: 10px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--fg-2);
+}
+.diagram-pill.is-active { border-color: var(--accent-1); color: var(--fg-1); background: var(--accent-soft); }
+
+.diagram-arrows {
+  display: flex; flex-direction: column; gap: 12px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+}
+.diagram-arrows span {
+  letter-spacing: 0.08em;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.library-categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-1);
+  border: 1px solid var(--border-1);
+}
+@media (max-width: 720px) { .library-categories { grid-template-columns: 1fr; } }
+.library-cat {
+  background: var(--bg-2);
+  padding: 24px;
+}
+.library-cat h4 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 14px; text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 10px;
+}
+.library-cat .num {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.library-cat p { margin: 0; font-size: 12.5px; color: var(--fg-2); line-height: 1.5; }
+
+/* ============================================================
+   DEMO FOOTER
+   ============================================================ */
+.demo-footer {
+  border-top: 1px solid var(--border-1);
+  background: var(--bg-2);
+  padding: 24px var(--container-pad);
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--fg-3);
+}
+.demo-footer .l { display: flex; gap: 8px; align-items: center; }
+.demo-footer .l b { color: var(--fg-2); font-weight: 700; }
+.demo-footer .dot {
+  width: 6px; height: 6px; background: var(--accent-1-fill); border-radius: 999px;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.btn-link {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--fg-2);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid transparent;
+  transition: all 160ms var(--ease-out);
+}
+.btn-link:hover { color: var(--fg-1); border-color: var(--accent-1); }
+
+.btn-ghost {
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 12px 22px;
+  border: 1px solid var(--border-2);
+  color: var(--fg-2);
+  transition: all 200ms var(--ease-out);
+}
+.btn-ghost:hover { border-color: var(--accent-1); color: var(--fg-1); }
+
+.spacer-lg { height: 48px; }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header">
+  <div class="header__inner">
+    <button class="brand" data-nav="dashboard" aria-label="Zum Dashboard">
+      <span class="brand__mark">T</span>
+      TOBIS<span class="brand__sub">Producer Intelligence</span>
+    </button>
+    <nav class="nav">
+      <button data-nav="dashboard" class="is-active">Dashboard</button>
+      <button data-nav="coverage">Coverage</button>
+      <button data-nav="acq-input">Acquisitions</button>
+      <button data-nav="library">Asset-Bibliothek</button>
+    </nav>
+    <div class="header__actions">
+      <button class="theme-toggle" id="themeToggle">
+        <span class="theme-toggle__dot"></span>
+        <span id="themeLabel">Hell</span>
+      </button>
+      <button class="cta-primary" data-nav="acq-input">Neue Analyse</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================
+     SCREEN 1 — DASHBOARD
+     ============================================================ -->
+<section class="screen is-active" id="screen-dashboard">
+  <div class="container">
+
+    <div class="hero">
+      <p class="eyebrow">Tobis Producer Intelligence · Mai 2026</p>
+      <h1 class="h-display">Sechs Werkzeuge,<br>ein gemeinsames&nbsp;Wissen.</h1>
+      <p class="lead">
+        Coverage Agent läuft seit März 2025 produktiv. Acquisitions ist Modul 2 — auf derselben
+        Infrastruktur, mit denselben Asset-Bibliotheks-Daten, derselben Login-Hülle.
+        Die übrigen vier Module greifen denselben Stack ab, sobald Tobis ja sagt.
+      </p>
+      <div class="hero__meta">
+        <span><b>147</b> Drehbücher analysiert</span>
+        <span class="hero__divider"></span>
+        <span><b>24</b> Acquisitions-Cases durchgespielt</span>
+        <span class="hero__divider"></span>
+        <span><b>1&nbsp;820</b> Vergleichsfilm-Einträge</span>
+      </div>
+    </div>
+
+    <div class="module-grid">
+
+      <button class="module" data-nav="coverage">
+        <span class="module__number">M·01</span>
+        <span class="pill pill--live module__status">Live</span>
+        <h3 class="module__name">Coverage Agent</h3>
+        <p class="module__role">Stoffsichtung</p>
+        <p class="module__desc">Vom Manuskript zur Lese-Empfehlung in 9 Minuten. Strukturierte Coverage mit Stärken, Schwächen, Marktanschluss.</p>
+        <span class="module__cta">Stoffe ansehen <span class="module__cta-arrow">→</span></span>
+      </button>
+
+      <button class="module" data-nav="acq-input">
+        <span class="module__number">M·02</span>
+        <span class="pill pill--pitch module__status">Im Pitch</span>
+        <h3 class="module__name">Acquisitions Agent</h3>
+        <p class="module__role">Kandidaten-Bewertung</p>
+        <p class="module__desc">Vergleichsfilme, Performance-Anreicherung, Kaufpreis-Korridor. Annahmen justierbar — die Entscheidung bleibt bei euch.</p>
+        <span class="module__cta">Analyse starten <span class="module__cta-arrow">→</span></span>
+      </button>
+
+      <button class="module" data-nav="concept" data-concept="producer">
+        <span class="module__number">M·03</span>
+        <span class="pill pill--concept module__status">Konzept</span>
+        <h3 class="module__name">Produzenten-Radar</h3>
+        <p class="module__role">Partner-Sourcing</p>
+        <p class="module__desc">Welche Produzent:innen liefern in welchem Genre Hits? Track Record, Lieferfähigkeit, offene Pipeline.</p>
+        <span class="module__cta">Konzept ansehen <span class="module__cta-arrow">→</span></span>
+      </button>
+
+      <button class="module" data-nav="concept" data-concept="sales">
+        <span class="module__number">M·04</span>
+        <span class="pill pill--concept module__status">Konzept</span>
+        <h3 class="module__name">Sales Estimates</h3>
+        <p class="module__role">Auslandsverwertung</p>
+        <p class="module__desc">Pro Territorium plausible Sales-Korridore. Mindestgarantien-Modellierung mit Konfidenzbändern.</p>
+        <span class="module__cta">Konzept ansehen <span class="module__cta-arrow">→</span></span>
+      </button>
+
+      <button class="module" data-nav="concept" data-concept="festival">
+        <span class="module__number">M·05</span>
+        <span class="pill pill--concept module__status">Konzept</span>
+        <h3 class="module__name">Festival-Radar</h3>
+        <p class="module__role">Premieren-Strategie</p>
+        <p class="module__desc">Welches Festival passt zu welchem Stoff? A-/B-/Spezialprogramm-Fit, Slot-Verfügbarkeit, Buyer-Anwesenheit.</p>
+        <span class="module__cta">Konzept ansehen <span class="module__cta-arrow">→</span></span>
+      </button>
+
+      <button class="module" data-nav="concept" data-concept="audience">
+        <span class="module__number">M·06</span>
+        <span class="pill pill--concept module__status">Konzept</span>
+        <h3 class="module__name">Audience Validation</h3>
+        <p class="module__role">Zielgruppen-Check</p>
+        <p class="module__desc">Test-Audiences synthetisch oder real. Trailer-Cuts gegen Demografie-Profile prüfen, bevor Marketing-Budget fließt.</p>
+        <span class="module__cta">Konzept ansehen <span class="module__cta-arrow">→</span></span>
+      </button>
+
+    </div>
+
+    <!-- Asset-Bibliothek band -->
+    <div class="library-band">
+      <div class="library-band__intro">
+        <span class="label-cap">Gemeinsames Wissen</span>
+        <h3>Die Asset-<br>Bibliothek</h3>
+        <p>Jedes Modul liest aus ihr und schreibt in sie zurück. Mit jedem Stoff, jedem Case, jedem Kaufabschluss wird sie schärfer.</p>
+        <button data-nav="library">Bibliothek öffnen →</button>
+      </div>
+      <div class="library-kpis">
+        <div class="kpi">
+          <div class="kpi__num">147</div>
+          <div class="kpi__label">Drehbücher / Coverage</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__num">1.820</div>
+          <div class="kpi__label">Vergleichsfilme</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__num">24</div>
+          <div class="kpi__label">Acquisitions-Cases</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__num">38</div>
+          <div class="kpi__label">Produktions-Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sources">
+      <span class="sources__label label-cap">Angebundene Datenquellen</span>
+      <span class="source-chip">Comscore</span>
+      <span class="source-chip">GfK Panel</span>
+      <span class="source-chip">FFA</span>
+      <span class="source-chip">IMDb Pro</span>
+      <span class="source-chip">The Numbers</span>
+      <span class="source-chip">Filmportal</span>
+      <span class="source-chip">DFFB-Archiv</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SCREEN 2 — COVERAGE LIST
+     ============================================================ -->
+<section class="screen" id="screen-coverage">
+  <div class="container">
+
+    <p class="eyebrow">Modul 01 · Coverage Agent</p>
+    <h1 class="h-display">Stoff-Sichtung</h1>
+    <p class="lead">Produktiv seit März 2025. Manuskripte werden per Mail eingereicht, in 9 Minuten liegt die Coverage in der Asset-Bibliothek — und ist damit Trainings­material für alle weiteren Module.</p>
+
+    <div class="spacer-lg"></div>
+
+    <div class="list-toolbar">
+      <div class="list-toolbar__filters">
+        <button class="filter-pill is-active">Alle</button>
+        <button class="filter-pill">Roman</button>
+        <button class="filter-pill">Drehbuch</button>
+        <button class="filter-pill">Treatment</button>
+        <button class="filter-pill">Sonstiges</button>
+      </div>
+      <span class="list-meta">12 Werke · zuletzt aktualisiert 28.05. um 17:42</span>
+    </div>
+
+    <table class="coverage-table">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Titel</th>
+          <th>Autor:in</th>
+          <th>Typ</th>
+          <th>Eingegangen</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Die Houssitterin</td>
+          <td>Emily Rudolf</td>
+          <td class="col-meta">Roman</td>
+          <td class="col-meta">28.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Strandopfer</td>
+          <td>Frank Goldhammer</td>
+          <td class="col-meta">Roman</td>
+          <td class="col-meta">27.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--pitch">Läuft</span></td>
+          <td class="col-title">Fräulein Gold — Schatten und Licht</td>
+          <td>Anna Stern</td>
+          <td class="col-meta">Roman</td>
+          <td class="col-meta">27.05.2026</td>
+          <td class="col-actions">5 Min. verbleibend</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Sanditz</td>
+          <td>Rietzchel</td>
+          <td class="col-meta">Drehbuch</td>
+          <td class="col-meta">26.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Only Human</td>
+          <td>—</td>
+          <td class="col-meta">Treatment</td>
+          <td class="col-meta">26.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Das Böse in Uns</td>
+          <td>Bieledeldt</td>
+          <td class="col-meta">Sonstiges</td>
+          <td class="col-meta">25.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Verloren</td>
+          <td>Carolina Wilga</td>
+          <td class="col-meta">Roman</td>
+          <td class="col-meta">24.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Schlafende Vulkane</td>
+          <td>Michael Hjorth Bjarni Thorsson</td>
+          <td class="col-meta">Roman</td>
+          <td class="col-meta">22.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill--live">Fertig</span></td>
+          <td class="col-title">Sidekicks</td>
+          <td>El Hozo</td>
+          <td class="col-meta">Roman</td>
+          <td class="col-meta">20.05.2026</td>
+          <td class="col-actions">Öffnen →</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SCREEN 3 — ACQUISITIONS INPUT
+     ============================================================ -->
+<section class="screen" id="screen-acq-input">
+  <div class="container container--narrow">
+
+    <p class="eyebrow">Modul 02 · Acquisitions Agent</p>
+    <h1 class="h-display">Kandidat<br>bewerten.</h1>
+    <p class="lead">Beschreibung des Stoffs eingeben — der Agent zieht Vergleichsfilme aus der Bibliothek, reichert sie mit Performance-Daten an und schlägt einen Kaufpreis-Korridor vor. Annahmen lassen sich danach justieren.</p>
+
+    <div class="spacer-lg"></div>
+
+    <form class="form" id="acqForm" onsubmit="event.preventDefault(); startAnalysis();">
+      <div class="form__intro">
+        <div>
+          <h3>Beispiel-Case (vorausgefüllt)</h3>
+          <p>Ein deutsch-dänischer Thriller im Nordic-Noir-Tonfall. Mittleres Budget-Tier, mittelgroßer Cast.</p>
+        </div>
+        <span class="pill pill--info">Demo-Daten</span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="f-title">Arbeitstitel</label>
+        <input class="field__input" id="f-title" value="DIE LETZTE FÄHRE">
+      </div>
+
+      <div class="field field__row">
+        <div>
+          <label class="field__label" for="f-genre">Sub-Genre · Tonalität</label>
+          <select class="field__select" id="f-genre">
+            <option>Thriller / Drama · Nordic Noir</option>
+            <option>Komödie · warm</option>
+            <option>Action · Genre</option>
+            <option>Familie · Animation</option>
+            <option>Dokumentarfilm</option>
+          </select>
+        </div>
+        <div>
+          <label class="field__label" for="f-country">Produktionsland</label>
+          <select class="field__select" id="f-country">
+            <option>DE / DK Co-Produktion</option>
+            <option>DE</option>
+            <option>DE / AT</option>
+            <option>DE / FR Co-Produktion</option>
+            <option>EU-Mehrländer</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field field__row">
+        <div>
+          <label class="field__label" for="f-regie">Regie</label>
+          <input class="field__input" id="f-regie" value="Mads Andersen (fiktiv)">
+        </div>
+        <div>
+          <label class="field__label" for="f-cast">Cast (Hauptrollen)</label>
+          <input class="field__input" id="f-cast" value="Lasse Holm · Mette Bergström · Anna Mark">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field__label">Budget-Tier</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="budget" value="klein">
+            <span class="radio__title">Klein</span>
+            <span class="radio__sub">unter 3 Mio €</span>
+          </label>
+          <label>
+            <input type="radio" name="budget" value="mittel" checked>
+            <span class="radio__title">Mittel</span>
+            <span class="radio__sub">3 – 8 Mio €</span>
+          </label>
+          <label>
+            <input type="radio" name="budget" value="gross">
+            <span class="radio__title">Groß</span>
+            <span class="radio__sub">über 8 Mio €</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="f-syn">Kurz-Synopsis (optional)</label>
+        <textarea class="field__textarea" id="f-syn" rows="3">Auf einer winterlich vereisten Ostsee-Fährlinie zwischen Rostock und Gedser verschwindet eine deutsche Diplomatin. Eine dänische Ermittlerin und ein deutscher LKA-Beamter müssen ihre Animositäten überwinden, bevor die Fähre endgültig im Eis stecken bleibt.</textarea>
+      </div>
+
+      <div class="form__actions">
+        <span class="demo-hint">Demo-Modell · Berechnung mit hinterlegten Beispieldaten</span>
+        <button type="submit" class="btn-big">Analyse starten →</button>
+      </div>
+    </form>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SCREEN 4 — LOADING
+     ============================================================ -->
+<section class="screen" id="screen-acq-loading">
+  <div class="loading-screen">
+    <div class="loading-card">
+      <p class="eyebrow">Acquisitions Agent</p>
+      <h2>Analyse läuft</h2>
+      <p class="lead">Vier Schichten werden nacheinander durchlaufen. Quellen pro Datenpunkt werden festgehalten.</p>
+
+      <div class="steps">
+        <div class="step" data-step="1">
+          <span class="step__num">1</span>
+          <span class="step__text">Merkmals-Extraktion · Sub-Genre, Tonalität, Zielgruppe</span>
+          <span class="step__indicator">●●●</span>
+        </div>
+        <div class="step" data-step="2">
+          <span class="step__num">2</span>
+          <span class="step__text">Vergleichsfilme · Ähnlichkeit über die Asset-Bibliothek</span>
+          <span class="step__indicator">●●●</span>
+        </div>
+        <div class="step" data-step="3">
+          <span class="step__num">3</span>
+          <span class="step__text">Performance-Anreicherung · Kino, HE, TV pro Vergleichsfilm</span>
+          <span class="step__indicator">●●●</span>
+        </div>
+        <div class="step" data-step="4">
+          <span class="step__num">4</span>
+          <span class="step__text">Kaufpreis-Modellierung · drei Szenarien, Korridor</span>
+          <span class="step__indicator">●●●</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SCREEN 5 — RESULT (4 tabs)
+     ============================================================ -->
+<section class="screen" id="screen-acq-result">
+  <div class="container">
+
+    <p class="eyebrow">Acquisitions Agent · Entscheidungsvorlage</p>
+
+    <div class="result-head">
+      <div>
+        <h1>Die letzte Fähre</h1>
+        <div class="meta-row">
+          <span><b>Thriller · Nordic Noir</b></span>
+          <span>DE / DK Co-Produktion</span>
+          <span>Budget-Tier <b>mittel</b></span>
+          <span>Regie <b>Mads Andersen</b></span>
+          <span>Analyse vom <b>29.05.2026</b></span>
+        </div>
+      </div>
+      <button class="btn-link" data-nav="acq-input">← Neue Analyse</button>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab is-active" data-tab="films"><span class="tab__num">01</span>Vergleichsfilme</button>
+      <button class="tab" data-tab="performance"><span class="tab__num">02</span>Performance</button>
+      <button class="tab" data-tab="price"><span class="tab__num">03</span>Kaufpreis</button>
+      <button class="tab" data-tab="export"><span class="tab__num">04</span>Export</button>
+    </div>
+
+    <!-- TAB 1: VERGLEICHSFILME -->
+    <div class="tab-panel is-active" data-panel="films">
+      <div class="films-list">
+
+        <div class="film">
+          <div class="film__poster">Das weisse Haus am Meer</div>
+          <div class="film__main">
+            <div class="film__head">
+              <span class="film__title">Das weisse Haus am Meer</span>
+              <span class="film__year">2022</span>
+              <span class="film__sim">81 % Ähnlich</span>
+            </div>
+            <p class="film__reason">DE/DK Co-Pro, Nordic-Noir-Ton, Cast-Tier vergleichbar (Mark / Bergström), ländlich-küstennaher Schauplatz, weibliche Ermittlerinnen-Linie.</p>
+            <dl class="film__metrics">
+              <div><dt>Kino DE/AT</dt><dd>312 k</dd></div>
+              <div><dt>Box Office</dt><dd>2,87 Mio €</dd></div>
+              <div><dt>Home Ent.</dt><dd>0,58 Mio €</dd></div>
+              <div><dt>TV-Lizenz</dt><dd>0,37 Mio €</dd></div>
+            </dl>
+          </div>
+          <div class="film__source">
+            <span class="film__source-name">Comscore · FFA</span>
+            <span class="confidence confidence--high">
+              Hoch
+              <span class="confidence__bar"><span></span><span></span><span></span></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="film">
+          <div class="film__poster">Eine Frage der Stille</div>
+          <div class="film__main">
+            <div class="film__head">
+              <span class="film__title">Eine Frage der Stille</span>
+              <span class="film__year">2021</span>
+              <span class="film__sim">76 % Ähnlich</span>
+            </div>
+            <p class="film__reason">DK-Drama-Krimi mit weiblicher Ensemble-Hauptlinie, eis-blaue Tonalität, internationale Festival-Karriere — gutes Performance-Proxy für Tonsetzung.</p>
+            <dl class="film__metrics">
+              <div><dt>Kino DE/AT</dt><dd>248 k</dd></div>
+              <div><dt>Box Office</dt><dd>2,28 Mio €</dd></div>
+              <div><dt>Home Ent.</dt><dd>0,46 Mio €</dd></div>
+              <div><dt>TV-Lizenz</dt><dd>0,30 Mio €</dd></div>
+            </dl>
+          </div>
+          <div class="film__source">
+            <span class="film__source-name">GfK · Filmportal</span>
+            <span class="confidence confidence--high">
+              Hoch
+              <span class="confidence__bar"><span></span><span></span><span></span></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="film">
+          <div class="film__poster">Der letzte Winter</div>
+          <div class="film__main">
+            <div class="film__head">
+              <span class="film__title">Der letzte Winter</span>
+              <span class="film__year">2023</span>
+              <span class="film__sim">72 % Ähnlich</span>
+            </div>
+            <p class="film__reason">Deutscher Mystery-Thriller mit weiblicher Ermittlerin und Wintersetting. Erfolgreich auf Streaming, Kino-Wert nur mittel — Ankerpunkt für „Wenn HE überraschend stark wird".</p>
+            <dl class="film__metrics">
+              <div><dt>Kino DE/AT</dt><dd>198 k</dd></div>
+              <div><dt>Box Office</dt><dd>1,82 Mio €</dd></div>
+              <div><dt>Home Ent.</dt><dd>0,62 Mio €</dd></div>
+              <div><dt>TV-Lizenz</dt><dd>0,24 Mio €</dd></div>
+            </dl>
+          </div>
+          <div class="film__source">
+            <span class="film__source-name">Comscore · The Numbers</span>
+            <span class="confidence confidence--mid">
+              Mittel
+              <span class="confidence__bar"><span></span><span></span><span></span></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="film">
+          <div class="film__poster">Eisweiss</div>
+          <div class="film__main">
+            <div class="film__head">
+              <span class="film__title">Eisweiss</span>
+              <span class="film__year">2020</span>
+              <span class="film__sim">68 % Ähnlich</span>
+            </div>
+            <p class="film__reason">DE/SE Co-Pro im selben Genre-Korridor. Älter, deshalb HE / TV bereits klar abgerechnet — guter Vollerlös-Anker für Long-Tail-Schätzungen.</p>
+            <dl class="film__metrics">
+              <div><dt>Kino DE/AT</dt><dd>176 k</dd></div>
+              <div><dt>Box Office</dt><dd>1,62 Mio €</dd></div>
+              <div><dt>Home Ent.</dt><dd>0,41 Mio €</dd></div>
+              <div><dt>TV-Lizenz</dt><dd>0,22 Mio €</dd></div>
+            </dl>
+          </div>
+          <div class="film__source">
+            <span class="film__source-name">FFA · IMDb Pro</span>
+            <span class="confidence confidence--mid">
+              Mittel
+              <span class="confidence__bar"><span></span><span></span><span></span></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="film">
+          <div class="film__poster">Borg Rock</div>
+          <div class="film__main">
+            <div class="film__head">
+              <span class="film__title">Borg Rock</span>
+              <span class="film__year">2022</span>
+              <span class="film__sim">64 % Ähnlich</span>
+            </div>
+            <p class="film__reason">DK Thriller, Insel-Setting, kleineres Budget — gibt eine konservative Untergrenze, falls Marketing-Druck geringer ausfällt als geplant.</p>
+            <dl class="film__metrics">
+              <div><dt>Kino DE/AT</dt><dd>112 k</dd></div>
+              <div><dt>Box Office</dt><dd>1,03 Mio €</dd></div>
+              <div><dt>Home Ent.</dt><dd>0,22 Mio €</dd></div>
+              <div><dt>TV-Lizenz</dt><dd>0,14 Mio €</dd></div>
+            </dl>
+          </div>
+          <div class="film__source">
+            <span class="film__source-name">DFFB-Archiv</span>
+            <span class="confidence confidence--low">
+              Niedrig
+              <span class="confidence__bar"><span></span><span></span><span></span></span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: PERFORMANCE -->
+    <div class="tab-panel" data-panel="performance">
+      <div class="scenarios">
+
+        <div class="scenario">
+          <p class="scenario__label">Konservativ · 0,66×</p>
+          <div class="scenario__besucher" data-perf="visitors-low">251.000</div>
+          <div class="scenario__besucher-label">Kino-Besucher DE / AT</div>
+          <div class="scenario__rows">
+            <div class="row"><span class="label">Box Office</span><span class="val" data-perf="bo-low">2,31 Mio €</span></div>
+            <div class="row"><span class="label">Verleiher-Anteil 43 %</span><span class="val" data-perf="cinema-low">0,99 Mio €</span></div>
+            <div class="row"><span class="label">Home Entertainment</span><span class="val" data-perf="he-low">0,46 Mio €</span></div>
+            <div class="row"><span class="label">TV-Lizenz</span><span class="val" data-perf="tv-low">0,30 Mio €</span></div>
+            <div class="row"><span class="label">Auswertungserlös</span><span class="val" data-perf="rev-low">1,76 Mio €</span></div>
+          </div>
+        </div>
+
+        <div class="scenario scenario--center">
+          <p class="scenario__label">Erwartungswert</p>
+          <div class="scenario__besucher" data-perf="visitors-mid">380.000</div>
+          <div class="scenario__besucher-label">Kino-Besucher DE / AT</div>
+          <div class="scenario__rows">
+            <div class="row"><span class="label">Box Office</span><span class="val" data-perf="bo-mid">3,50 Mio €</span></div>
+            <div class="row"><span class="label">Verleiher-Anteil 43 %</span><span class="val" data-perf="cinema-mid">1,50 Mio €</span></div>
+            <div class="row"><span class="label">Home Entertainment</span><span class="val" data-perf="he-mid">0,70 Mio €</span></div>
+            <div class="row"><span class="label">TV-Lizenz</span><span class="val" data-perf="tv-mid">0,45 Mio €</span></div>
+            <div class="row"><span class="label">Auswertungserlös</span><span class="val" data-perf="rev-mid">2,66 Mio €</span></div>
+          </div>
+        </div>
+
+        <div class="scenario">
+          <p class="scenario__label">Upside · 1,52×</p>
+          <div class="scenario__besucher" data-perf="visitors-up">578.000</div>
+          <div class="scenario__besucher-label">Kino-Besucher DE / AT</div>
+          <div class="scenario__rows">
+            <div class="row"><span class="label">Box Office</span><span class="val" data-perf="bo-up">5,32 Mio €</span></div>
+            <div class="row"><span class="label">Verleiher-Anteil 43 %</span><span class="val" data-perf="cinema-up">2,29 Mio €</span></div>
+            <div class="row"><span class="label">Home Entertainment</span><span class="val" data-perf="he-up">1,06 Mio €</span></div>
+            <div class="row"><span class="label">TV-Lizenz</span><span class="val" data-perf="tv-up">0,69 Mio €</span></div>
+            <div class="row"><span class="label">Auswertungserlös</span><span class="val" data-perf="rev-up">4,04 Mio €</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 3: KAUFPREIS (THE HERO) -->
+    <div class="tab-panel" data-panel="price">
+
+      <div class="price-hero">
+        <div>
+          <p class="price-hero__label">Maximaler Kaufpreis · Erwartungswert</p>
+          <p class="price-hero__value">
+            <span class="currency">€</span><span id="priceMain">1,42</span><span style="font-size:0.5em;">&nbsp;Mio</span>
+          </p>
+          <div class="price-hero__corridor">
+            <span>Korridor</span>
+            <span><b id="priceLow">0,52</b> Mio konservativ</span>
+            <span>→</span>
+            <span><b id="priceUp">2,73</b> Mio upside</span>
+          </div>
+          <p class="price-hero__hint">Die Schieberegler verändern die Annahmen — der Korridor bleibt eine Bandbreite, keine Punktprognose.</p>
+        </div>
+
+        <div class="sliders">
+          <div class="slider">
+            <div class="slider__head">
+              <span class="slider__label">Erwartete Besucher DE/AT</span>
+              <span class="slider__value"><span id="vVisitors">380</span>k</span>
+            </div>
+            <input type="range" class="slider__input" id="sVisitors" min="80" max="900" step="10" value="380">
+            <div class="slider__range"><span>80 k</span><span>900 k</span></div>
+          </div>
+
+          <div class="slider">
+            <div class="slider__head">
+              <span class="slider__label">Deckungsbeitrag-Ziel</span>
+              <span class="slider__value"><span id="vMargin">12</span> %</span>
+            </div>
+            <input type="range" class="slider__input" id="sMargin" min="5" max="25" step="1" value="12">
+            <div class="slider__range"><span>5 %</span><span>25 %</span></div>
+          </div>
+
+          <div class="slider">
+            <div class="slider__head">
+              <span class="slider__label">P&amp;A / Marketing-Budget</span>
+              <span class="slider__value"><span id="vPA">1,40</span> Mio €</span>
+            </div>
+            <input type="range" class="slider__input" id="sPA" min="30" max="350" step="5" value="140">
+            <div class="slider__range"><span>0,3 Mio</span><span>3,5 Mio</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-card__head">
+          <h3>Rechenweg · Erwartungswert</h3>
+          <span class="label-cap">Live · justierbare Annahmen</span>
+        </div>
+        <div class="calc-rows">
+          <div class="calc-row">
+            <div>Box Office Brutto</div>
+            <div>Besucher × 9,20 €</div>
+            <div data-calc="bo">3,50 Mio €</div>
+          </div>
+          <div class="calc-row">
+            <div>Verleiher-Nettoanteil Kino</div>
+            <div>43 % × Box Office</div>
+            <div data-calc="cinema">1,50 Mio €</div>
+          </div>
+          <div class="calc-row">
+            <div>Home Entertainment</div>
+            <div>20 % × Box Office</div>
+            <div data-calc="he">0,70 Mio €</div>
+          </div>
+          <div class="calc-row">
+            <div>TV-Lizenz</div>
+            <div>13 % × Box Office</div>
+            <div data-calc="tv">0,45 Mio €</div>
+          </div>
+          <div class="calc-row">
+            <div>= Auswertungserlös</div>
+            <div></div>
+            <div data-calc="rev">2,66 Mio €</div>
+          </div>
+          <div class="calc-row calc-row--minus">
+            <div>P&amp;A / Marketing</div>
+            <div>Regler</div>
+            <div data-calc="pa">1,40 Mio €</div>
+          </div>
+          <div class="calc-row calc-row--minus">
+            <div>Synchronisation</div>
+            <div>fix</div>
+            <div data-calc="sync">0,15 Mio €</div>
+          </div>
+          <div class="calc-row calc-row--minus">
+            <div>Vertrieb</div>
+            <div>8 % × Erlös</div>
+            <div data-calc="dist">0,21 Mio €</div>
+          </div>
+          <div class="calc-row calc-row--minus">
+            <div>Deckungsbeitrag-Ziel</div>
+            <div>12 % × Erlös</div>
+            <div data-calc="margin">0,32 Mio €</div>
+          </div>
+          <div class="calc-row calc-row--total">
+            <div>Maximaler Kaufpreis</div>
+            <div></div>
+            <div data-calc="total">0,58 Mio €</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 4: EXPORT -->
+    <div class="tab-panel" data-panel="export">
+      <div class="export-grid">
+
+        <div class="export-options">
+          <button class="export-opt is-selected" data-export="pdf">
+            <span class="export-opt__check"></span>
+            <div class="export-opt__body">
+              <h4>PDF-Memo · 6 Seiten</h4>
+              <p>Vollständige Entscheidungsvorlage mit Rechenweg, Vergleichsfilmen und Quellenangaben.</p>
+            </div>
+          </button>
+          <button class="export-opt" data-export="slides">
+            <span class="export-opt__check"></span>
+            <div class="export-opt__body">
+              <h4>Slide-Deck · 12 Folien</h4>
+              <p>Für die nächste Acquisitions-Runde — visuell, mit Headline-Korridor auf Folie 3.</p>
+            </div>
+          </button>
+          <button class="export-opt" data-export="mail">
+            <span class="export-opt__check"></span>
+            <div class="export-opt__body">
+              <h4>Acquisitions-Mail</h4>
+              <p>Vorbereitete Mail mit Anhang an den vorgeschlagenen Verteiler (Geschäftsführung, Acquisitions-Lead).</p>
+            </div>
+          </button>
+          <button class="export-opt" data-export="csv">
+            <span class="export-opt__check"></span>
+            <div class="export-opt__body">
+              <h4>CSV-Rohdaten</h4>
+              <p>Vergleichsfilme + Performance-Werte für die eigene Excel-Modellierung.</p>
+            </div>
+          </button>
+        </div>
+
+        <div class="export-preview">
+          <h3>Vorschau · Headline-Werte</h3>
+          <div class="export-preview__rows">
+            <div class="export-preview__row"><span class="l">Stoff</span><span class="v">Die letzte Fähre</span></div>
+            <div class="export-preview__row"><span class="l">Genre</span><span class="v">Thriller · Nordic Noir</span></div>
+            <div class="export-preview__row"><span class="l">Kaufpreis Erwartung</span><span class="v" data-preview="main">1,42 Mio €</span></div>
+            <div class="export-preview__row"><span class="l">Korridor</span><span class="v" data-preview="corridor">0,52 — 2,73 Mio €</span></div>
+            <div class="export-preview__row"><span class="l">Besucher-Erwartung</span><span class="v" data-preview="visitors">380.000</span></div>
+            <div class="export-preview__row"><span class="l">P&amp;A-Annahme</span><span class="v" data-preview="pa">1,40 Mio €</span></div>
+            <div class="export-preview__row"><span class="l">Vergleichsfilme</span><span class="v">5 · davon 2 mit hoher Konfidenz</span></div>
+          </div>
+          <div class="export-preview__cta">
+            <span class="label-cap">Erstellt am 29.05.2026 · Heiko</span>
+            <button class="btn-big" id="exportBtn">Exportieren →</button>
+          </div>
+          <div class="export-success" id="exportSuccess">
+            ✓ Export erstellt · An die Acquisitions-Inbox gesendet
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SCREEN 6 — KONZEPT PLATZHALTER
+     ============================================================ -->
+<section class="screen" id="screen-concept">
+  <div class="container">
+
+    <p class="eyebrow" id="conceptNumber">Modul 03 · Konzept</p>
+    <div class="concept">
+
+      <div class="concept__intro">
+        <h1 id="conceptTitle">Produzenten-Radar</h1>
+        <p id="conceptLead">Welche Produzent:innen liefern in welchem Genre Hits? Welche haben Budget-Disziplin? Welche sind über-committed? Der Radar beantwortet drei Fragen, bevor ein Erstgespräch stattfindet.</p>
+
+        <span class="pill pill--concept">Konzept · Modul 03</span>
+        <div class="spacer-lg"></div>
+
+        <h3 class="h-section" style="font-size:18px;">Was es leistet</h3>
+        <ul class="concept-list" id="conceptList">
+          <li>Track-Record-Profile aller deutschsprachigen Produzent:innen mit Genre-Spezifika</li>
+          <li>Budget-Disziplin: tatsächliches vs. geplantes Budget über die letzten 5 Jahre</li>
+          <li>Pipeline-Sichtbarkeit: was steckt aktuell im Funnel — und droht zu kollidieren?</li>
+          <li>Empfehlungen für Co-Pro-Partner pro Stoff aus der Asset-Bibliothek</li>
+        </ul>
+
+        <div class="concept-phase">
+          <div class="concept-phase__box">
+            <span class="label-cap">Phase 1 · Monat 1–3</span>
+            <p>Datenmodell, Ingestion aus Filmportal / DFFB / IMDb Pro / FFA-Förderlisten.</p>
+          </div>
+          <div class="concept-phase__box">
+            <span class="label-cap">Phase 2 · Monat 4–6</span>
+            <p>Empfehlungs-Layer und Verknüpfung mit Acquisitions-Cases im Dashboard.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept__details">
+        <h3>Nutzt aus der Plattform</h3>
+        <ul class="concept-list">
+          <li><b>Asset-Bibliothek</b> · alle bisher analysierten Stoffe + Coverage-Profile</li>
+          <li><b>Acquisitions-Cases</b> · welche Produzent:innen liefern in unserem Sweet Spot?</li>
+          <li><b>Externe Daten</b> · FFA-Förderhistorie, Filmportal-Filmografien, IMDb Pro-Pipeline</li>
+        </ul>
+        <h3 style="margin-top:24px;">Voraussichtlicher Aufwand</h3>
+        <ul class="concept-list">
+          <li>Setup auf bestehender Plattform · keine neue Infrastruktur</li>
+          <li>3 Monate Bauzeit · davon 4 Wochen Datenlizenzierung</li>
+          <li>Laufende Pflege im selben Betriebsteam</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SCREEN 7 — ASSET-BIBLIOTHEK
+     ============================================================ -->
+<section class="screen" id="screen-library">
+  <div class="container">
+
+    <p class="eyebrow">Plattform-Kern</p>
+    <h1 class="h-display">Asset-<br>Bibliothek.</h1>
+
+    <div class="library-hero">
+      <p class="lead">Sie ist das eigentliche Asset. Jeder Stoff, jeder Vergleichsfilm, jeder Acquisitions-Case wird hier abgelegt — strukturiert, mit Quellen, mit Konfidenzen. Jedes Modul liest aus ihr, schreibt in sie zurück und macht sie damit präziser.</p>
+        <div class="library-stats">
+          <div class="kpi"><div class="kpi__num">1.820</div><div class="kpi__label">Vergleichsfilme</div></div>
+          <div class="kpi"><div class="kpi__num">147</div><div class="kpi__label">Drehbücher</div></div>
+          <div class="kpi"><div class="kpi__num">24</div><div class="kpi__label">Acquisitions-Cases</div></div>
+          <div class="kpi"><div class="kpi__num">38</div><div class="kpi__label">Produktions-Profile</div></div>
+        </div>
+    </div>
+
+    <!-- Read/Write Flow -->
+    <div class="library-diagram">
+      <h3>Wer liest · Wer schreibt</h3>
+      <div class="diagram-flow">
+
+        <div class="diagram-col">
+          <h4>Schreiben in die Bibliothek</h4>
+          <div class="diagram-pill is-active">Coverage Agent · 147 Reports</div>
+          <div class="diagram-pill is-active">Acquisitions Agent · 24 Cases</div>
+          <div class="diagram-pill">Produzenten-Radar · ab Q4</div>
+          <div class="diagram-pill">Festival-Radar · ab 2027</div>
+        </div>
+
+        <div class="diagram-arrows">
+          <span>—→</span>
+          <span>—→</span>
+          <span>—→</span>
+        </div>
+
+        <div class="diagram-col">
+          <h4>Lesen aus der Bibliothek</h4>
+          <div class="diagram-pill is-active">Acquisitions · Vergleichsfilm-Suche</div>
+          <div class="diagram-pill">Sales Estimates · Erlösmuster</div>
+          <div class="diagram-pill">Audience Validation · Demografie-Cluster</div>
+          <div class="diagram-pill">Produzenten-Radar · Track Records</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="library-categories">
+      <div class="library-cat">
+        <div class="num">1.820</div>
+        <h4>Vergleichsfilme</h4>
+        <p>Titel mit Performance-Daten (Kino, HE, TV), Genre-Vektoren, Cast-Tier, Quellen pro Datenpunkt.</p>
+      </div>
+      <div class="library-cat">
+        <div class="num">147</div>
+        <h4>Coverage-Profile</h4>
+        <p>Strukturierte Lese-Berichte: Stärken, Schwächen, Zielgruppen-Anschluss, Adaptions-Eignung.</p>
+      </div>
+      <div class="library-cat">
+        <div class="num">38</div>
+        <h4>Produktions-Profile</h4>
+        <p>Filmografien deutschsprachiger Produzent:innen mit Genre-Hits, Budget-Disziplin, Lieferquote.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     DEMO FOOTER
+     ============================================================ -->
+<footer class="demo-footer">
+  <span class="l"><span class="dot"></span>Konzept-Prototyp · <b>Demo-Daten</b> — alle Titel, Quellen und Kennzahlen sind illustrativ.</span>
+  <span>Calluna Labs · Mai 2026 · <b>v0.1</b></span>
+</footer>
+
+<!-- ============================================================
+     SCRIPT
+     ============================================================ -->
+<script>
+(function(){
+  'use strict';
+
+  // ----- Navigation -----
+  const screens = document.querySelectorAll('.screen');
+  const navBtns = document.querySelectorAll('[data-nav]');
+
+  function navigate(target, extra) {
+    screens.forEach(s => s.classList.toggle('is-active', s.id === 'screen-' + target));
+    document.querySelectorAll('.nav button').forEach(b => {
+      const t = b.getAttribute('data-nav');
+      const matches = (
+        (target === 'dashboard' && t === 'dashboard') ||
+        (target === 'coverage' && t === 'coverage') ||
+        ((target === 'acq-input' || target === 'acq-loading' || target === 'acq-result') && t === 'acq-input') ||
+        (target === 'library' && t === 'library')
+      );
+      b.classList.toggle('is-active', matches);
+    });
+    if (target === 'acq-loading') runLoading();
+    if (target === 'concept' && extra) populateConcept(extra);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-nav');
+      const extra = btn.getAttribute('data-concept');
+      navigate(target, extra);
+    });
+  });
+
+  // ----- Theme toggle -----
+  const themeBtn = document.getElementById('themeToggle');
+  const themeLabel = document.getElementById('themeLabel');
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    themeLabel.textContent = document.body.classList.contains('dark') ? 'Dunkel' : 'Hell';
+  });
+
+  // ----- Loading screen -----
+  function runLoading() {
+    const steps = document.querySelectorAll('#screen-acq-loading .step');
+    steps.forEach(s => { s.classList.remove('is-active', 'is-done'); });
+    let i = 0;
+    function next() {
+      if (i > 0) {
+        steps[i-1].classList.remove('is-active');
+        steps[i-1].classList.add('is-done');
+        steps[i-1].querySelector('.step__indicator').textContent = '✓ FERTIG';
+      }
+      if (i >= steps.length) {
+        setTimeout(() => navigate('acq-result'), 320);
+        return;
+      }
+      steps[i].classList.add('is-active');
+      i++;
+      setTimeout(next, 900);
+    }
+    next();
+  }
+
+  window.startAnalysis = function() { navigate('acq-loading'); };
+
+  // ----- Tabs -----
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      const target = t.getAttribute('data-tab');
+      tabs.forEach(x => x.classList.toggle('is-active', x === t));
+      document.querySelectorAll('.tab-panel').forEach(p => {
+        p.classList.toggle('is-active', p.getAttribute('data-panel') === target);
+      });
+    });
+  });
+
+  // ----- Concept population -----
+  const concepts = {
+    producer: {
+      num: 'Modul 03',
+      title: 'Produzenten-Radar',
+      lead: 'Welche Produzent:innen liefern in welchem Genre Hits? Welche haben Budget-Disziplin? Welche sind über-committed? Der Radar beantwortet drei Fragen, bevor ein Erstgespräch stattfindet.',
+      list: [
+        'Track-Record-Profile aller deutschsprachigen Produzent:innen mit Genre-Spezifika',
+        'Budget-Disziplin: tatsächliches vs. geplantes Budget über die letzten 5 Jahre',
+        'Pipeline-Sichtbarkeit: was steckt aktuell im Funnel — und droht zu kollidieren?',
+        'Empfehlungen für Co-Pro-Partner pro Stoff aus der Asset-Bibliothek'
+      ]
+    },
+    sales: {
+      num: 'Modul 04',
+      title: 'Sales Estimates',
+      lead: 'Pro Territorium plausible Sales-Korridore. Welche Mindestgarantien sind realistisch — und welche überzogen? Das Modul übersetzt Vergleichsfilm-Performance in Territorial-Sales.',
+      list: [
+        'Sales-Korridore pro Territorium und Verleiher-Tier',
+        'Mindestgarantien-Modellierung mit Konfidenzbändern',
+        'Historische Hit-Quoten je Sales-Agent als Konfidenz-Input',
+        'Verknüpfung mit dem Acquisitions-Kaufpreis: lohnt sich Vorab-Sales-Vertrieb?'
+      ]
+    },
+    festival: {
+      num: 'Modul 05',
+      title: 'Festival-Radar',
+      lead: 'Welches Festival passt zu welchem Stoff? Mehr als nur Berlinale, Cannes, Venedig — der Radar deckt die zweite Reihe ab, in der oft die richtigen Slots gewonnen werden.',
+      list: [
+        'A-/B-/Spezialprogramm-Fit pro Stoff aus der Bibliothek',
+        'Slot-Verfügbarkeit und Reichweiten-Schätzungen',
+        'Buyer-Anwesenheit pro Festival in den letzten 3 Jahren',
+        'Submission-Kalender mit automatischen Erinnerungen'
+      ]
+    },
+    audience: {
+      num: 'Modul 06',
+      title: 'Audience Validation',
+      lead: 'Test-Audiences synthetisch oder real. Trailer-Cuts gegen Demografie-Profile prüfen, bevor Marketing-Budget fließt. Senkt das Risiko des „guten Films, schlechten Trailers".',
+      list: [
+        'Synthetische Demografie-Cluster aus historischen Tobis-Cases',
+        'Trailer-Cut-Vergleich gegen Zielgruppen-Reaktionsmuster',
+        'A/B-Testing-Setup für Plakat- und Online-Varianten',
+        'Korrelation zwischen Test-Scores und tatsächlichem Box Office'
+      ]
+    }
+  };
+
+  function populateConcept(key) {
+    const c = concepts[key];
+    if (!c) return;
+    document.getElementById('conceptNumber').textContent = c.num + ' · Konzept';
+    document.getElementById('conceptTitle').textContent = c.title;
+    document.getElementById('conceptLead').textContent = c.lead;
+    const list = document.getElementById('conceptList');
+    while (list.firstChild) list.removeChild(list.firstChild);
+    c.list.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    });
+  }
+
+  // ----- Export options -----
+  document.querySelectorAll('.export-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.export-opt').forEach(x => x.classList.toggle('is-selected', x === opt));
+    });
+  });
+
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const success = document.getElementById('exportSuccess');
+    success.classList.add('is-visible');
+    success.textContent = '✓ Export wird erstellt …';
+    setTimeout(() => { success.textContent = '✓ Export erstellt · An die Acquisitions-Inbox gesendet'; }, 900);
+  });
+
+  // ----- Kaufpreis Calculator -----
+  const TICKET = 9.20;
+  const CINEMA_NET = 0.43;
+  const HE_PCT = 0.20;
+  const TV_PCT = 0.13;
+  const DIST_PCT = 0.08;
+  const SYNC_FIX = 0.15; // Mio €
+
+  function fmtMio(v) {
+    if (v < 0) v = 0;
+    return v.toFixed(2).replace('.', ',') + ' Mio €';
+  }
+  function fmtK(v) {
+    if (v >= 1000) {
+      return (Math.round(v)).toLocaleString('de-DE');
+    }
+    return Math.round(v).toLocaleString('de-DE');
+  }
+
+  function computeScenario(visitorsK, marginPct, paM) {
+    const bo = visitorsK * 1000 * TICKET / 1_000_000; // Mio €
+    const cinema = bo * CINEMA_NET;
+    const he = bo * HE_PCT;
+    const tv = bo * TV_PCT;
+    const rev = cinema + he + tv;
+    const dist = rev * DIST_PCT;
+    const margin = rev * (marginPct/100);
+    const price = rev - paM - SYNC_FIX - dist - margin;
+    return { bo, cinema, he, tv, rev, dist, margin, price: Math.max(0, price), paM };
+  }
+
+  function update() {
+    const visitorsK = parseInt(document.getElementById('sVisitors').value, 10);
+    const marginPct = parseInt(document.getElementById('sMargin').value, 10);
+    const paM = parseInt(document.getElementById('sPA').value, 10) / 100; // Mio €
+
+    document.getElementById('vVisitors').textContent = visitorsK;
+    document.getElementById('vMargin').textContent = marginPct;
+    document.getElementById('vPA').textContent = paM.toFixed(2).replace('.', ',');
+
+    const mid = computeScenario(visitorsK, marginPct, paM);
+    const low = computeScenario(visitorsK * 0.66, marginPct, paM);
+    const up  = computeScenario(visitorsK * 1.52, marginPct, paM);
+
+    // Headline
+    document.getElementById('priceMain').textContent = mid.price.toFixed(2).replace('.', ',');
+    document.getElementById('priceLow').textContent = low.price.toFixed(2).replace('.', ',');
+    document.getElementById('priceUp').textContent = up.price.toFixed(2).replace('.', ',');
+
+    // Calc card
+    const c = mid;
+    document.querySelector('[data-calc="bo"]').textContent = fmtMio(c.bo);
+    document.querySelector('[data-calc="cinema"]').textContent = fmtMio(c.cinema);
+    document.querySelector('[data-calc="he"]').textContent = fmtMio(c.he);
+    document.querySelector('[data-calc="tv"]').textContent = fmtMio(c.tv);
+    document.querySelector('[data-calc="rev"]').textContent = fmtMio(c.rev);
+    document.querySelector('[data-calc="pa"]').textContent = fmtMio(c.paM);
+    document.querySelector('[data-calc="sync"]').textContent = fmtMio(SYNC_FIX);
+    document.querySelector('[data-calc="dist"]').textContent = fmtMio(c.dist);
+    document.querySelector('[data-calc="margin"]').textContent = fmtMio(c.margin);
+    document.querySelector('[data-calc="total"]').textContent = fmtMio(c.price);
+
+    // Performance tab
+    document.querySelector('[data-perf="visitors-low"]').textContent = fmtK(visitorsK * 0.66 * 1000);
+    document.querySelector('[data-perf="visitors-mid"]').textContent = fmtK(visitorsK * 1000);
+    document.querySelector('[data-perf="visitors-up"]').textContent  = fmtK(visitorsK * 1.52 * 1000);
+
+    document.querySelector('[data-perf="bo-low"]').textContent = fmtMio(low.bo);
+    document.querySelector('[data-perf="bo-mid"]').textContent = fmtMio(mid.bo);
+    document.querySelector('[data-perf="bo-up"]').textContent  = fmtMio(up.bo);
+
+    document.querySelector('[data-perf="cinema-low"]').textContent = fmtMio(low.cinema);
+    document.querySelector('[data-perf="cinema-mid"]').textContent = fmtMio(mid.cinema);
+    document.querySelector('[data-perf="cinema-up"]').textContent  = fmtMio(up.cinema);
+
+    document.querySelector('[data-perf="he-low"]').textContent = fmtMio(low.he);
+    document.querySelector('[data-perf="he-mid"]').textContent = fmtMio(mid.he);
+    document.querySelector('[data-perf="he-up"]').textContent  = fmtMio(up.he);
+
+    document.querySelector('[data-perf="tv-low"]').textContent = fmtMio(low.tv);
+    document.querySelector('[data-perf="tv-mid"]').textContent = fmtMio(mid.tv);
+    document.querySelector('[data-perf="tv-up"]').textContent  = fmtMio(up.tv);
+
+    document.querySelector('[data-perf="rev-low"]').textContent = fmtMio(low.rev);
+    document.querySelector('[data-perf="rev-mid"]').textContent = fmtMio(mid.rev);
+    document.querySelector('[data-perf="rev-up"]').textContent  = fmtMio(up.rev);
+
+    // Export preview
+    document.querySelector('[data-preview="main"]').textContent = fmtMio(mid.price);
+    document.querySelector('[data-preview="corridor"]').textContent = low.price.toFixed(2).replace('.', ',') + ' — ' + up.price.toFixed(2).replace('.', ',') + ' Mio €';
+    document.querySelector('[data-preview="visitors"]').textContent = fmtK(visitorsK * 1000);
+    document.querySelector('[data-preview="pa"]').textContent = fmtMio(c.paM);
+
+    // Update calc descriptions for the dynamic %
+    document.querySelectorAll('.calc-row')[8].querySelector('div:nth-child(2)').textContent = marginPct + ' % × Erlös';
+  }
+
+  ['sVisitors', 'sMargin', 'sPA'].forEach(id => {
+    document.getElementById(id).addEventListener('input', update);
+  });
+
+  update();
+
+})();
+</script>
+
+</body>
+</html>
